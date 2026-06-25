@@ -286,17 +286,16 @@ def generar_memoria_pdf():
     for i, head in enumerate(headers): pdf.cell(col_w[i], 7, head, border=1, align='C')
     pdf.ln()
     
-pdf.set_font('Arial', '', 9)
+    pdf.set_font('Arial', '', 9)
     for idx, row in df_master.iterrows():
-        # Limpiamos el texto para quitar los emojis que rompen el PDF
         estatus_texto = "APROBADO" if "APROBADO" in str(row["Estatus"]) else "RECHAZADO"
-        
         pdf.cell(col_w[0], 6, str(row["Combo"]), border=1, align='C')
         pdf.cell(col_w[1], 6, str(row["D/C Flexión"]), border=1, align='C')
         pdf.cell(col_w[2], 6, str(row["D/C Cortante"]), border=1, align='C')
         pdf.cell(col_w[3], 6, str(row["Deriva Máx"]), border=1, align='C')
-        pdf.cell(col_w[4], 6, estatus_texto, border=1, align='C') # <--- Aquí usamos el texto limpio
+        pdf.cell(col_w[4], 6, estatus_texto, border=1, align='C')
         pdf.ln()
+    pdf.ln(8)
     
     # Bloque 3: BOM
     pdf.set_font('Arial', 'B', 11)
