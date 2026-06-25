@@ -306,7 +306,7 @@ def generar_memoria_pdf():
     pdf.cell(0, 6, f"   - PESO TOTAL DE ACERO: {gran_total_kg:.2f} kg (Incluye 5% de merma)", ln=True)
     pdf.cell(0, 6, f"   - Indice de Congestion: {ratio_kg_m3:.1f} kg/m3 de concreto", ln=True)
 
-    return pdf.output()
+    return pdf.output(dest='S')
 
 # --- BOTÓN DE DESCARGA PDF EN BARRA LATERAL ---
 st.sidebar.divider()
