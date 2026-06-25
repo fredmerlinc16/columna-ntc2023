@@ -306,12 +306,22 @@ def generar_memoria_pdf():
     pdf.cell(0, 6, f"   - PESO TOTAL DE ACERO: {gran_total_kg:.2f} kg (Incluye 5% de merma)", ln=True)
     pdf.cell(0, 6, f"   - Indice de Congestion: {ratio_kg_m3:.1f} kg/m3 de concreto", ln=True)
 
-    return pdf.output(dest='S')
+    pdf_output = pdf.output()
+    return bytes(pdf_output)
 
 # --- BOTÓN DE DESCARGA PDF EN BARRA LATERAL ---
 st.sidebar.divider()
 if FPDF_DISPONIBLE:
-    pdf_bytes = generar_memoria_pdf()
-    st.sidebar.download_button(label="🖨️ Descargar Memoria PDF", data=pdf_bytes, file_name="Memoria_Columna_NTC.pdf", mime="application/pdf", type="primary")
+    try:
+        pdf_bytes = generar_memoria_pdf()
+        st.sidebar.download_button(
+            label="🖨️ Descargar Memoria PDF", 
+            data=pdf_bytes, 
+            file_name="Memoria_Columna_NTC.pdf", 
+            mime="application/pdf", 
+            type="primary"
+        )
+    except Exception as e:
+        st.sidebar.error(f"Error al generar PDF: {e}")
 else:
     st.sidebar.caption("⚠️ Instala `pip install fpdf2` para activar el PDF.")
